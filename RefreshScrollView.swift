@@ -21,16 +21,18 @@ struct RefreshScrollView<Content: View>: View {
     var type: RefreshScrollType = .default
     var content: Content
     var onRefresh: AsyncVoidBlock
+    var showIndicators: Bool = false
     private let refreshContentHeight: CGFloat = 120
 
-    init(type: RefreshScrollType = .default, @ViewBuilder content: @escaping () -> Content, onRefresh: @escaping AsyncVoidBlock) {
+    init(type: RefreshScrollType = .default, @ViewBuilder content: @escaping () -> Content, onRefresh: @escaping AsyncVoidBlock, showIndicators: Bool = false) {
         self.type = type
         self.content = content()
         self.onRefresh = onRefresh
+        self.showIndicators = showIndicators
     }
 
     var body: some View {
-        ScrollView(.vertical) {
+        ScrollView(.vertical, showsIndicators: showIndicators) {
             VStack {
                 VStack {
                     switch type {
